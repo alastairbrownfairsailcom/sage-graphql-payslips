@@ -1,0 +1,31 @@
+  type Query {
+    hello: String
+    doc(employeeId: ID!) : PayDocument
+  }
+
+  type PayDocument {
+    id: ID!
+    employeeName: String!
+    frequency: String
+    period: String
+    payDate: String
+    grossPay: Float
+    nettPay: Float
+    nettYTD: Float
+    employerSections: [PaySection]
+    employeeSections: [PaySection]
+  }
+
+  type PaySection {
+    id: ID!
+    description: String
+    total: Float
+    payItems: [PayItem]
+  }
+
+  type PayItem {
+    id: ID!
+    description: String!
+    currentAmount: Float
+    ytd: Float
+  }

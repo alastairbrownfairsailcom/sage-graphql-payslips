@@ -11,6 +11,6 @@ export class AppComponent {
   title = 'sage-graphql-payslips';
   
   constructor(apollo: Apollo) {
-    apollo.query({query: gql`{query{doc (employeeId:"fred") {employeeName}}}`}).subscribe(console.log);
+    apollo.query({query: gql`{doc (employeeId:"fred") {employeeName}}`}).subscribe(console.log);
   }
 }

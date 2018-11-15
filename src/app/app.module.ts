@@ -26,7 +26,7 @@ export class AppModule {
     httpLink: HttpLink
   ) {
      apollo.create({
-      link: httpLink.create({ uri: 'https://morning-fortress-45105.herokuapp.com/graphql'}),
+      link: httpLink.create({ uri: '/graphql'}),
       cache: new InMemoryCache()
     });
   }

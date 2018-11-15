@@ -1,7 +1,24 @@
 // server.js
 const path = require('path');
+var graphqlHTTP = require('express-graphql');
+var { buildSchema } = require('graphql');
+const dummyDocs = require("./dummy-docs.js");
 const express = require('express');
 const app = express();
+
+// Construct a schema, using GraphQL schema language
+const fs = require('fs');
+const schemaDefinition = fs.readFileSync("server/doc-schema.graphql", "utf8");
+const schema = buildSchema(schemaDefinition);
+
+// The root provides a resolver function for each API endpoint
+var root = {
+  hello: () => {
+    return 'Hello world!';
+  },
+  doc: dummyDocs.getDoc
+};
+
 // If an incoming request uses
 // a protocol other than HTTPS,
 // redirect that request to the
@@ -31,6 +48,12 @@ app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
 
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
+
 // Start the app by listening on the default
 // Heroku port
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 4000);
